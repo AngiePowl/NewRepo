@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
@@ -19,31 +19,23 @@ jobs:
         node-version: '14'
 
     - name: Install Dependencies
-      run: npm install -g htmlhint
+      run: npm install -g html-validator-cli
+
+    - name: Download HTML File
+      run: wget -O index.html https://github.com/AngiePowl/NewRepo/blob/main/index.html
 
     - name: Validate HTML
       run: |
-        # Replace 'index.html' with the correct path to your HTML file
-        htmlhint "https://github.com/AngiePowl/NewRepo/blob/main/index.html"
-
-    - name: Check HTML Validation Results
-      run: |
-        # Check the exit code to determine if the validation passed
-        if [ $? -eq 0 ]; then
-          echo "HTML validation passed."
-        else
-          echo "HTML validation failed."
-          exit 1
-        fi
+        npx html-validator-cli index.html
 
     - name: Build Artifact
       uses: actions/upload-artifact@v2
       with:
         name: web-app
-        path: https://github.com/AngiePowl/NewRepo/tree/main  # Relative path to the directory containing "index.html"
+        path:https://github.com/AngiePowl/NewRepo  # Relative path to the directory containing "index.html"
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: https://github.com/AngiePowl/NewRepo/tree/main  # Relative path to the directory containing "index.html"
+        publish_dir: https://github.com/AngiePowl/NewRepo  # Relative path to the directory containing "index.html"
