@@ -15,7 +15,7 @@ jobs:
 
     - name: Build and Test
       run: |
-           npx html-validator-cli "AngiePowl/NewRepo/index.html"
+           npx html-validator-cli "index.html"
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
