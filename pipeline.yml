@@ -1,4 +1,4 @@
-name: CI/CD for HTML Page
+name: Deploy and Publish
 
 on:
   push:
@@ -7,32 +7,17 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Install Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
-
-    - name: Install Dependencies
-      run: npm install -g html-validator-cli
-
-    - name: Download HTML File
-      run: wget -O index.html https://github.com/AngiePowl/NewRepo/blob/main/index.html
-
-    - name: Validate HTML
-      run: |
-        npx html-validator-cli index.html
-
     - name: Build Artifact
       uses: actions/upload-artifact@v2
       with:
         name: web-app
-        path:https://github.com/AngiePowl/NewRepo  # Relative path to the directory containing "index.html"
+        path: https://github.com/AngiePowl/NewRepo  # Relative path to the directory containing "index.html"
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
