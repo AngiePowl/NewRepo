@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: HTML Validation and Artifact Build
 
 on:
   push:
@@ -7,23 +7,27 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest  
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Build and Test
-      run: |
-           npx html-validator-cli "index.html"
+    - name: Install Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
 
-    - name: Upload Artifact
+    - name: Install Dependencies
+      run: npm install -g html-validator-cli
+
+    - name: Validate HTML
+      run: |
+        # Replace 'index.html' with the correct path to your HTML file
+        npx html-validator-cli "AngiePowl/NewRepo/index.html"
+
+    - name: Build Artifact
       uses: actions/upload-artifact@v2
       with:
         name: web-app
-        path: .  AngiePowl/NewRepo
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: .  AngiePowl/NewRepo
+        path: AngiePowl/NewRepo  # Relative path to the directory containing "index.html"
