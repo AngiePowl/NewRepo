@@ -1,4 +1,4 @@
-name: Artifact Build
+name: CI/CD for HTML Page
 
 on:
   push:
@@ -13,11 +13,37 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Install Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install Dependencies
+      run: npm install -g htmlhint
+
+    - name: Validate HTML
+      run: |
+        # Replace 'index.html' with the correct path to your HTML file
+        htmlhint "AngiePowl/NewRepo/index.html"
+
+    - name: Check HTML Validation Results
+      run: |
+        # Check the exit code to determine if the validation passed
+        if [ $? -eq 0 ]; then
+          echo "HTML validation passed."
+        else
+          echo "HTML validation failed."
+          exit 1
+        fi
+
     - name: Build Artifact
       uses: actions/upload-artifact@v2
       with:
         name: web-app
         path: AngiePowl/NewRepo  # Relative path to the directory containing "index.html"
 
-    - name: Validation Complete
-      run: echo "HTML validation completed successfully"
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: AngiePowl/NewRepo  # Relative path to the directory containing "index.html"
