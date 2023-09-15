@@ -24,7 +24,7 @@ jobs:
     - name: Validate HTML
       run: |
         # Replace 'index.html' with the correct path to your HTML file
-        htmlhint "AngiePowl/NewRepo/index.html"
+        htmlhint "https://github.com/AngiePowl/NewRepo/blob/main/index.html"
 
     - name: Check HTML Validation Results
       run: |
@@ -40,10 +40,10 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: web-app
-        path: AngiePowl/NewRepo  # Relative path to the directory containing "index.html"
+        path: https://github.com/AngiePowl/NewRepo/tree/main  # Relative path to the directory containing "index.html"
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: AngiePowl/NewRepo  # Relative path to the directory containing "index.html"
+        publish_dir: https://github.com/AngiePowl/NewRepo/tree/main  # Relative path to the directory containing "index.html"
