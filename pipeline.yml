@@ -1,4 +1,4 @@
-name: Deploy and Publish
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -6,18 +6,26 @@ on:
       - main
 
 jobs:
-  build:
-    runs-on: windows-latest
+  deploy:
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Build Artifact
-      uses: actions/upload-artifact@v2
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
       with:
-        name: web-app
-        path: https://github.com/AngiePowl/NewRepo  # Relative path to the directory containing "index.html"
+        node-version: '14'
+
+    - name: Install Dependencies
+      run: npm install -g http-server
+
+    - name: Build and Deploy
+      run: |
+        # Replace 'AngiePowl/NewRepo' with your repository path
+        cd https://github.com/AngiePowl/NewRepo
+        http-server -p ${{ github.event.repository.name }}
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
