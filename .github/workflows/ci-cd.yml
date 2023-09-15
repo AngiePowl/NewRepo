@@ -1,0 +1,29 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest  
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build and Test
+      run: |
+           npx html-validator-cli "AngiePowl/NewRepo/index.html"
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: web-app
+        path: .  AngiePowl/NewRepo
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: .  AngiePowl/NewRepo
