@@ -1,0 +1,32 @@
+# Deploy static content to GitHub Pages
+name: Deploy HTML to GitHub Pages
+
+on:
+  # Trigger on pushes to the main branch
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      
+      - name: Set Up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install Dependencies
+        run: npm install # If you have any dependencies
+
+      - name: Build HTML
+        run: # Add your build command here if needed
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: https://github.com/AngiePowl/NewRepo # Change this to the directory where your index.html is located
