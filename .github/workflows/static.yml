@@ -1,9 +1,9 @@
-name: CI/CD Pipeline
+name: Deploy HTML to GitHub Pages
 
 on:
   push:
     branches:
-      - main  # Replace with your desired branch
+      - main
 
 jobs:
   build:
@@ -19,25 +19,22 @@ jobs:
           node-version: '14'
 
       - name: Install Dependencies (if needed)
-        run: npm install
-             npm install -g htmlhint  # Modify this if you have dependencies
+        run: npm install  # Modify this if you have dependencies
 
-      #- name: Run Basic Tests
-       # run: |
+    #  - name: Run Basic Tests
+     #   run: |
           # Replace with your test command(s)
           # For example, you might use a tool like HTMLLint
-        #  html-lint index.html
-          
+          # html-lint index.html
+
       - name: Create Zip Archive
         run: |
           # Zip the index.html file
-          Compress-Archive -Path index.html -DestinationPath website.zip
+          zip -r website.zip index.html
 
       - name: Publish to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .  # Change this to the directory where your index.html is
+          github_token: ${{ github.token }}
+          publish_dir: .  # Change this to the directory where your zip file is
           publish_branch: gh-pages  # Change to your GitHub Pages branch
-          publish_files: |
-            index.html
