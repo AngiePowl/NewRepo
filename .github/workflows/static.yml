@@ -3,7 +3,7 @@ name: Deploy HTML to GitHub Pages
 on:
   push:
     branches:
-      - main  # Adjust the branch name if needed
+      - main  # Adjust to your main branch name
 
 jobs:
   deploy:
@@ -16,13 +16,19 @@ jobs:
       - name: Set Up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'  # You can specify your desired Node.js version
+          node-version: '14'
 
-      - name: Install Dependencies
-        run: npm install  # If you have any dependencies, replace with your build commands if necessary
+      - name: Install Dependencies (if needed)
+        run: npm install  # Modify this if you have dependencies
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: https://github.com/AngiePowl/NewRepo.git  # Replace with the directory where your index.html is located
+        run: |
+          git checkout main  # Make sure you're on the main branch
+          git pull origin main  # Pull the latest changes
+          # Optionally, add any build commands here if needed
+          # For example, if you need to build your HTML file:
+          # npm run build
+          # or any other build command
+          git add index.html
+          git commit -m "Update index.html"  # Modify the commit message
+          git push origin main  # Push the changes back to GitHub
