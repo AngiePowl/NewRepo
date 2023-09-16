@@ -32,9 +32,9 @@ jobs:
           # Zip the index.html file
           Compress-Archive -Path index.html -DestinationPath website.zip
 
-      - name: Publish to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ github.token }}
-          publish_dir: .  # Change this to the directory where your zip file is
-          publish_branch: gh-pages  # Change to your GitHub Pages branch
+     # - name: Publish to GitHub Pages
+      #  uses: peaceiris/actions-gh-pages@v3
+       # with:
+        #  github_token: ${{ github.token }}
+         # publish_dir: .  # Change this to the directory where your zip file is
+          #publish_branch: gh-pages  # Change to your GitHub Pages branch
