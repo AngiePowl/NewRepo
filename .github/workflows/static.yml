@@ -28,7 +28,7 @@ jobs:
           # Optionally, add any build commands here if needed
           # For example, if you need to build your HTML file:
           # npm run build
-          # or any other build command
+          # or any  build command
           git add index.html
           git commit -m "Update index.html"  # Modify the commit message
           git push origin main  # Push the changes back to GitHub
