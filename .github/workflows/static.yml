@@ -30,7 +30,7 @@ jobs:
       - name: Create Zip Archive
         run: |
           # Zip the index.html file
-          Compress-Archive index.html -https://github.com/AngiePowl/NewRepo.git index.zip
+          Compress-Archive index.html  my-website.zip
 
      # - name: Publish to GitHub Pages
       #  uses: peaceiris/actions-gh-pages@v3
