@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-        with:
-          repository: https://github.com/AngiePowl/NewRepo.git  # Replace with the actual repository path
 
       - name: Set Up Node.js
         uses: actions/setup-node@v2
