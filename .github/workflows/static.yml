@@ -35,7 +35,13 @@ jobs:
            Write-Host "Current Working Directory: $PWD"
       - name: List Files in Working Directory
         run: ls -R $GITHUB_WORKSPACE
-
+      - name: Commit and Push Zip File
+        run: |
+          git config --local user.email "angelin.powl@gmail.com"
+          git config --local user.name "AngiePowl"
+          git add myArtifact.zip
+          git commit -m "Add myArtifact.zip"
+          git push
       # Publish to GitHub Pages
       # Commented out since it's not needed for zip creation
       # - name: Publish to GitHub Pages
