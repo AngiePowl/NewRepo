@@ -21,21 +21,21 @@ jobs:
       - name: Install Dependencies (if needed)
         run: npm install  # Modify this if you have dependencies
 
-    #  - name: Run Basic Tests
-     #   run: |
-          # Replace with your test command(s)
-          # For example, you might use a tool like HTMLLint
-          # html-lint index.html
+      # Download index.html from your GitHub repository to the workflow's workspace
+      - name: Download index.html
+        run: |
+          curl -LO https://raw.githubusercontent.com/AngiePowl/NewRepo/main/index.html
 
       - name: Create Zip Archive
         run: |
           # Zip the index.html file
-              Compress-Archive -Path index.html -DestinationPath myArtifact.zip
+          Compress-Archive -Path index.html -DestinationPath myArtifact.zip
 
-
-     # - name: Publish to GitHub Pages
-      #  uses: peaceiris/actions-gh-pages@v3
-       # with:
-        #  github_token: ${{ github.token }}
-         # publish_dir: .  # Change this to the directory where your zip file is
-          #publish_branch: gh-pages  # Change to your GitHub Pages branch
+      # Publish to GitHub Pages
+      # Commented out since it's not needed for zip creation
+      # - name: Publish to GitHub Pages
+      #   uses: peaceiris/actions-gh-pages@v3
+      #   with:
+      #     github_token: ${{ github.token }}
+      #     publish_dir: .  # Change this to the directory where your zip file is
+      #     publish_branch: gh-pages  # Change to your GitHub Pages branch
