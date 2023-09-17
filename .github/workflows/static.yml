@@ -30,7 +30,8 @@ jobs:
       - name: Create Zip Archive
         run: |
           # Zip the index.html file
-          Compress-Archive index.html  my-website.zip
+              Compress-Archive -Path index.html -DestinationPath my-website.zip
+
 
      # - name: Publish to GitHub Pages
       #  uses: peaceiris/actions-gh-pages@v3
