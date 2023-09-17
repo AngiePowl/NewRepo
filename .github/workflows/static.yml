@@ -33,7 +33,7 @@ jobs:
       - name: Create Zip Archive
         run: |
           # Zip the index.html file
-          Compress-Archive -Path index.html -DestinationPath myArtifact.zip
+          Compress-Archive -Path index.html -DestinationPath myArtifact.zip -Force
 
       - name: Debug
         run: |
