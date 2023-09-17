@@ -33,6 +33,8 @@ jobs:
       - name: Debug
         run: |
            Write-Host "Current Working Directory: $PWD"
+      - name: List Files in Working Directory
+        run: ls -R $GITHUB_WORKSPACE
 
       # Publish to GitHub Pages
       # Commented out since it's not needed for zip creation
