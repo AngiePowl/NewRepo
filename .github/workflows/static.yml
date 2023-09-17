@@ -38,10 +38,12 @@ jobs:
       - name: Commit and Push Zip File
         run: |
           git config --local user.email "angelin.powl@gmail.com"
-          git config --local user.name "AngiePowl"
+          git config --local user.name "GitHub Action"
           git add myArtifact.zip
           git commit -m "Add myArtifact.zip"
-          git push
+          git push https://github.com/AngiePowl/NewRepo.git HEAD:main
+        env:
+           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
       # Publish to GitHub Pages
       # Commented out since it's not needed for zip creation
       # - name: Publish to GitHub Pages
