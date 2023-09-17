@@ -30,23 +30,17 @@ jobs:
         run: |
           curl -LO https://raw.githubusercontent.com/AngiePowl/NewRepo/main/index.html
 
-      - name: Run HTML Validation Tests
+      - name: Check if the HTML lint validation test passed
         run: |
-          # Install HTMLHint (you may need to adjust this based on your specific testing tool)
-          npm install -g htmlhint
-
           # Run HTMLHint on index.html
-          htmlhint index.html
+          $htmlLintResult = htmlhint index.html
 
-      - name: Create Zip Archive
-        run: |
-          # Check if the HTML lint validation test passed
-          if [ $? -eq 0 ]; then
-            # Zip the index.html file
+          if ($htmlLintResult.Count -eq 0) {
+            # If there are no linting errors, continue with creating the zip archive
             Compress-Archive -Path index.html -DestinationPath myArtifact.zip -Force
-          else
+          } else {
             echo "HTML lint validation test failed. Skipping artifact creation."
-          fi
+          }
 
       - name: Debug
         run: |
