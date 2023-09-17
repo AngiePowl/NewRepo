@@ -30,10 +30,23 @@ jobs:
         run: |
           curl -LO https://raw.githubusercontent.com/AngiePowl/NewRepo/main/index.html
 
+      - name: Run HTML Validation Tests
+        run: |
+          # Install HTMLHint (you may need to adjust this based on your specific testing tool)
+          npm install -g htmlhint
+
+          # Run HTMLHint on index.html
+          htmlhint index.html
+
       - name: Create Zip Archive
         run: |
-          # Zip the index.html file
-          Compress-Archive -Path index.html -DestinationPath myArtifact.zip -Force
+          # Check if the HTML lint validation test passed
+          if [ $? -eq 0 ]; then
+            # Zip the index.html file
+            Compress-Archive -Path index.html -DestinationPath myArtifact.zip -Force
+          else
+            echo "HTML lint validation test failed. Skipping artifact creation."
+          fi
 
       - name: Debug
         run: |
@@ -53,10 +66,3 @@ jobs:
           git push origin_with_token HEAD:main
         env:
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
-
-      - name: Run HTML Validation Tests
-        run: |
-          # Install HTMLHint (you may need to adjust this based on your specific testing tool)
-          npm install -g htmlhint
-
-#end
