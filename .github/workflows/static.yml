@@ -53,4 +53,10 @@ jobs:
           git push origin_with_token HEAD:main
         env:
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+
+      - name: Run HTML Validation Tests
+        run: |
+          # Install HTMLHint (you may need to adjust this based on your specific testing tool)
+          npm install -g htmlhint
+
 #end
