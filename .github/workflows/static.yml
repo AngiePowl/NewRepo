@@ -30,6 +30,9 @@ jobs:
         run: |
           # Zip the index.html file
           Compress-Archive -Path index.html -DestinationPath myArtifact.zip
+      - name: Debug
+        run: |
+           Write-Host "Current Working Directory: $PWD"
 
       # Publish to GitHub Pages
       # Commented out since it's not needed for zip creation
