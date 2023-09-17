@@ -45,6 +45,11 @@ jobs:
           git push origin_with_token HEAD:main
         env:
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+      - name: Commit and Push Zip File
+        run: |
+          git add myArtifact.zip
+          git commit -m "Add myArtifact.zip"
+          git push origin HEAD:main
 
 # Publish to GitHub Pages
       # Commented out since it's not needed for zip creation
