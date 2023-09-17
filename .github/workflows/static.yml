@@ -48,13 +48,6 @@ jobs:
             echo "HTML lint validation test failed. Skipping artifact creation."
           fi
 
-      - name: Debug
-        run: |
-          Write-Host "Current Working Directory: $PWD"
-
-      - name: List Files in Working Directory
-        run: ls -R $GITHUB_WORKSPACE
-
       - name: Add and Commit Changes
         run: |
           git add myArtifact.zip
