@@ -35,18 +35,23 @@ jobs:
           # Install HTMLHint (you may need to adjust this based on your specific testing tool)
           npm install -g htmlhint
 
-          # Run HTMLHint on index.html
-          htmlhint index.html
+          # Run HTMLHint on index.html and store the exit code in a variable
+          $htmlHintExitCode = htmlhint index.html
 
-      - name: Create Zip Archive
-        run: |
           # Check if the HTML lint validation test passed
-          if [ $? -eq 0 ]; then
+          if ($htmlHintExitCode -eq 0) {
             # Zip the index.html file
             Compress-Archive -Path index.html -DestinationPath myArtifact.zip -Force
-          else
-            echo "HTML lint validation test failed. Skipping artifact creation."
-          fi
+          } else {
+            Write-Host "HTML lint validation test failed. Skipping artifact creation."
+          }
+
+      - name: Debug
+        run: |
+          Write-Host "Current Working Directory: $PWD"
+
+      - name: List Files in Working Directory
+        run: ls -R $GITHUB_WORKSPACE
 
       - name: Add and Commit Changes
         run: |
@@ -59,4 +64,3 @@ jobs:
           git push origin_with_token HEAD:main
         env:
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
-#end
