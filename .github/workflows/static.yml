@@ -30,12 +30,15 @@ jobs:
         run: |
           curl -LO https://raw.githubusercontent.com/AngiePowl/NewRepo/main/index.html
 
+      - name: Install HTMLHint
+        run: npm install -g htmlhint
+
       - name: Check if the HTML lint validation test passed
         run: |
           # Run HTMLHint on index.html
           $htmlLintResult = htmlhint index.html
 
-          if ($htmlLintResult.Count -eq 0) {
+          if ($htmlLintResult.length -eq 0) {
             # If there are no linting errors, continue with creating the zip archive
             Compress-Archive -Path index.html -DestinationPath myArtifact.zip -Force
           } else {
@@ -63,4 +66,3 @@ jobs:
           git push origin_with_token HEAD:main
         env:
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
-#end
