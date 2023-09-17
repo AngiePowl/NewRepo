@@ -10,6 +10,11 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      - name: Set Up Git Configurations
+        run: |
+          git config --global user.email "angelin.powl@gmail.com"
+          git config --global user.name "AngiePowl"
+
       - name: Checkout Repository
         uses: actions/checkout@v2
 
@@ -21,7 +26,6 @@ jobs:
       - name: Install Dependencies (if needed)
         run: npm install  # Modify this if you have dependencies
 
-      # Download index.html from your GitHub repository to the workflow's workspace
       - name: Download index.html
         run: |
           curl -LO https://raw.githubusercontent.com/AngiePowl/NewRepo/main/index.html
@@ -30,33 +34,22 @@ jobs:
         run: |
           # Zip the index.html file
           Compress-Archive -Path index.html -DestinationPath myArtifact.zip
+
       - name: Debug
         run: |
-           Write-Host "Current Working Directory: $PWD"
+          Write-Host "Current Working Directory: $PWD"
+
       - name: List Files in Working Directory
         run: ls -R $GITHUB_WORKSPACE
-      - name: Commit and Push Zip 
-        run: |
-          git add myArtifact.zip
-          git commit -m "Add myArtifact.zip"
-          git push origin HEAD:main
 
-      - name: Commit and Push Zip File
+      - name: Add and Commit Changes
         run: |
-          git config --local user.email "angelin.powl@gmail.com"
-          git config --local user.name "GitHub Action"
           git add myArtifact.zip
           git commit -m "Add myArtifact.zip"
+
+      - name: Push Changes
+        run: |
           git remote add origin_with_token https://$PAT_TOKEN@github.com/AngiePowl/NewRepo.git
           git push origin_with_token HEAD:main
         env:
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
-
-# Publish to GitHub Pages
-      # Commented out since it's not needed for zip creation
-      # - name: Publish to GitHub Pages
-      #   uses: peaceiris/actions-gh-pages@v3
-      #   with:
-      #     github_token: ${{ github.token }}
-      #     publish_dir: .  # Change this to the directory where your zip file is
-      #     publish_branch: gh-pages  # Change to your GitHub Pages branch
