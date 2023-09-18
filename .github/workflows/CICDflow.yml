@@ -54,13 +54,13 @@ jobs:
 
       - name: Add and Commit Changes
         run: |
-          if (git status --porcelain | Select-String ".") {
-            # Changes exist, add and commit
-            git add .
-            git commit -m "Add myArtifact.zip"
-          } else {
+          if git diff --exit-code; then
             echo "No changes to commit."
-          }
+          else
+            git add .
+          git commit -m "Add myArtifact.zip"
+          fi
+   
 
       - name: Push Changes
         run: |
