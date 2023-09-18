@@ -54,11 +54,11 @@ jobs:
 
       - name: Add and Commit Changes
         run: |
-          if git diff-index --quiet HEAD --; then
-          echo "No changes to commit."
-          else
+          if ! git diff-index --quiet HEAD --; then
           git add .
           git commit -m "Add myArtifact.zip"
+          else
+          echo "No changes to commit."
           fi
 
       - name: Add and Commit Changes
