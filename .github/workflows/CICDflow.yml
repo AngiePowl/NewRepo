@@ -54,6 +54,15 @@ jobs:
 
       - name: Add and Commit Changes
         run: |
+          if git diff-index --quiet HEAD --; then
+          echo "No changes to commit."
+          else
+          git add .
+          git commit -m "Add myArtifact.zip"
+          fi
+
+      - name: Add and Commit Changes
+        run: |
           # Add all changes, including index.html and myArtifact.zip
           git add .
 
