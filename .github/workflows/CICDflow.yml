@@ -24,7 +24,7 @@ jobs:
           node-version: '14'
 
       - name: Install Dependencies (if needed)
-        run: npm install
+        run: npm install  # Modify this if you have dependencies
 
       - name: Download index.html
         run: |
@@ -54,27 +54,15 @@ jobs:
 
       - name: Add and Commit Changes
         run: |
-          for /f %%i in ('git status --porcelain') do (
-          set CHANGES=true
-           )
-
-          if "%CHANGES%"=="true" (
+          # Add all changes, including index.html and myArtifact.zip
           git add .
+
+          # Commit all changes
           git commit -m "Add myArtifact.zip"
-          ) else (
-          echo "No changes to commit."
-          )
 
       - name: Push Changes
         run: |
           git remote add origin_with_token https://$PAT_TOKEN1@github.com/AngiePowl/NewRepo.git
           git push origin_with_token HEAD:main
         env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN1 }}
-      - name: Push Changes
-        run: |
-          echo "Repository URL: https://$PAT_TOKEN1@github.com/AngiePowl/NewRepo.git"
-          git remote add origin_with_token https://$PAT_TOKEN1@github.com/AngiePowl/NewRepo.git
-          git push origin_with_token HEAD:main
-        env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN1 }}
+          PAT_TOKEN1: ${{ secrets.PAT_TOKEN1 }}
