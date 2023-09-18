@@ -54,11 +54,13 @@ jobs:
 
       - name: Add and Commit Changes
         run: |
-          # Add all changes, including index.html and myArtifact.zip
-          git add .
-
-          # Commit all changes
-          git commit -m "Add myArtifact.zip"
+          if [ -n "$(git status --porcelain)" ]; then
+            # Changes exist, add and commit
+            git add .
+            git commit -m "Add myArtifact.zip"
+          else
+            echo "No changes to commit."
+          fi
 
       - name: Push Changes
         run: |
