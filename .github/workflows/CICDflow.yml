@@ -24,7 +24,7 @@ jobs:
           node-version: '14'
 
       - name: Install Dependencies (if needed)
-        run: npm install  
+        run: npm install
 
       - name: Download index.html
         run: |
@@ -51,15 +51,16 @@ jobs:
 
       - name: List Files in Working Directory
         run: ls -R $GITHUB_WORKSPACE
+
       - name: Add and Commit Changes
         run: |
-          git status --porcelain | Select-String "." | ForEach-Object {
-          # Changes exist, add and commit
-          git add .
-          git commit -m "Add myArtifact.zip"
-          exit
-    }
-    echo "No changes to commit."
+          if (git status --porcelain | Select-String ".") {
+            # Changes exist, add and commit
+            git add .
+            git commit -m "Add myArtifact.zip"
+          } else {
+            echo "No changes to commit."
+          }
 
       - name: Push Changes
         run: |
