@@ -64,7 +64,7 @@ jobs:
 
       - name: Push Changes
         run: |
-          git remote add origin_with_token https://$PAT_TOKEN@github.com/AngiePowl/NewRepo.git
+          git remote add origin_with_token https://$PAT_TOKEN1@github.com/AngiePowl/NewRepo.git
           git push origin_with_token HEAD:main
         env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN1 }}
