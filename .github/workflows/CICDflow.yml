@@ -45,29 +45,17 @@ jobs:
             echo "HTML lint validation test failed. Skipping artifact creation."
           }
 
-      - name: Debug
-        run: |
-          Write-Host "Current Working Directory: $PWD"
-
-      - name: List Files in Working Directory
-        run: ls -R $GITHUB_WORKSPACE
-
       - name: Add and Commit Changes
         run: |
           if ! git diff-index --quiet HEAD --; then
-          git add .
-          git commit -m "Add myArtifact.zip"
+            # Add all changes, including index.html and myArtifact.zip
+            git add .
+
+            # Commit all changes
+            git commit -m "Add myArtifact.zip"
           else
-          echo "No changes to commit."
+            echo "No changes to commit."
           fi
-
-      - name: Add and Commit Changes
-        run: |
-          # Add all changes, including index.html and myArtifact.zip
-          git add .
-
-          # Commit all changes
-          git commit -m "Add myArtifact.zip"
 
       - name: Push Changes
         run: |
