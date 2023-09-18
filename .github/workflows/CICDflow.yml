@@ -54,12 +54,16 @@ jobs:
 
       - name: Add and Commit Changes
         run: |
-          if [[ -n "$(git status --porcelain)" ]]; then
+          for /f %%i in ('git status --porcelain') do (
+          set CHANGES=true
+           )
+
+          if "%CHANGES%"=="true" (
           git add .
           git commit -m "Add myArtifact.zip"
-          else
+          ) else (
           echo "No changes to commit."
-          fi
+          )
 
       - name: Push Changes
         run: |
