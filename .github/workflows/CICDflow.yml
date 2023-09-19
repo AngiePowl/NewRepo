@@ -23,8 +23,8 @@ jobs:
         with:
           node-version: '14'
 
-      - name: Install Dependencies (if needed)
-        run: npm install  # Modify this if you have dependencies
+      - name: Install Dependencies 
+        run: npm install  
 
       - name: Download index.html
         run: |
