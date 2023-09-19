@@ -1,5 +1,5 @@
 name: Deploy HTML to GitHub Pages
-#CICD
+
 on:
   push:
     branches:
@@ -35,10 +35,11 @@ jobs:
 
       - name: Create Build Artifact
         run: |
-          Copy-Item -Path "index.html" -Destination "$env:GITHUB_WORKSPACE\myArtifact.zip"
-          git add .
+          mkdir myArtifact
+          cp index.html myArtifact/
+          git add myArtifact
           git commit -m "Add myArtifact.zip"
-          Compress-Archive -Path . -DestinationPath myArtifact.zip -Force
+          Compress-Archive -Path myArtifact -DestinationPath myArtifact.zip -Force
 
       - name: Push Changes
         run: |
