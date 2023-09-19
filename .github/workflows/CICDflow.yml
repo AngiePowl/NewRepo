@@ -35,9 +35,10 @@ jobs:
 
       - name: Create Build Artifact
         run: |
+          Copy-Item -Path "index.html" -Destination "$env:GITHUB_WORKSPACE\myArtifact.zip"
           git add .
           git commit -m "Add myArtifact.zip"
-          Compress-Archive -Path index.html -DestinationPath myArtifact.zip -Force
+          Compress-Archive -Path . -DestinationPath myArtifact.zip -Force
 
       - name: Push Changes
         run: |
